@@ -53,6 +53,15 @@ public class FilterFactory {
 				return new ColorMap();
 			else
 				throw new ParsingScriptException(lineNumber);
+		case "CALIBRATION" :
+			String path = parseOptionForPicFileReader(optionList);
+			if(path != null){
+				Calibration calib = new Calibration();
+				calib.openJson(path);
+				return calib;
+			}
+			else				
+				throw new ParsingScriptException(lineNumber);
 		}
 		throw new ParsingScriptException(lineNumber);
 	}

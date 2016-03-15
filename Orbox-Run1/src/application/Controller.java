@@ -80,9 +80,9 @@ public class Controller {
 				new ExtensionFilter("Text Files", "*.txt"), new ExtensionFilter("All files", "*.*"));
 		File inputFile = chooser.showOpenDialog(tabPane.getScene().getWindow());
 		if (inputFile != null) {
-			StringBuffer txt = new StringBuffer();
+			StringBuffer txt = new StringBuffer("");
 			try {
-				Files.lines(Paths.get(inputFile.getAbsolutePath())).forEach(s -> txt.append(s));
+				Files.lines(Paths.get(inputFile.getAbsolutePath())).forEach( s -> txt.append(s));
 				scriptArea.setText(txt.toString());
 				consoleArea.setText("");
 			}
@@ -110,8 +110,9 @@ public class Controller {
 		File outputFile = chooser.showSaveDialog(tabPane.getScene().getWindow());
 		if (outputFile != null) {
 			try {
-				BufferedWriter writer = Files.newBufferedWriter(Paths.get(outputFile.getAbsolutePath()));
+				BufferedWriter writer = Files.newBufferedWriter(outputFile.toPath());
 				writer.write(scriptArea.getText());
+				writer.close();
 			}
 			catch (IOException e) {
 				//e.printStackTrace();
