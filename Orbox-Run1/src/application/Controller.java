@@ -15,6 +15,7 @@ import imageProcessing.FilterExecutionException;
 import imageProcessing.FilterFactory;
 import imageProcessing.ImageFilter;
 import imageProcessing.PicTabViewer;
+import imageProcessing.Timeable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TabPane;
@@ -41,6 +42,8 @@ public class Controller {
 			this.parseScript();
 
 			Mat currentMat = null;
+			long counter = 0;
+
 			while (!filterQueue.isEmpty()) {
 				ImageFilter currentFilter = filterQueue.poll();
 
@@ -51,15 +54,18 @@ public class Controller {
 						tabPane.getTabs().add(new ViewerTab(((PicTabViewer) currentFilter).getNameOfTab(), currentMat));
 					else throw new FilterExecutionException("There is no image to show!");
 				}
-			}
 
+				if (currentFilter instanceof Timeable)
+					counter += ((Timeable) currentFilter).getCounter();
+			}
+			consoleArea.setText(consoleArea.getText() + "The current script executed in : " + counter + " ms.\n");
 		}
 		catch (FilterExecutionException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 			consoleArea.setText(consoleArea.getText() + e.getMessage() + '\n');
 		}
 		catch (ParsingScriptException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 			consoleArea.setText(consoleArea.getText() + "The line [" + e.getLineNumberFaulty()
 					+ "] is not understood by the parser.\n");
 		}
@@ -82,14 +88,14 @@ public class Controller {
 		if (inputFile != null) {
 			StringBuffer txt = new StringBuffer("");
 			try {
-				Files.lines(Paths.get(inputFile.getAbsolutePath())).forEach( s -> txt.append(s));
+				Files.lines(Paths.get(inputFile.getAbsolutePath())).forEach(s -> txt.append(s));
 				scriptArea.setText(txt.toString());
 				consoleArea.setText("");
 			}
 			catch (IOException e) {
 				consoleArea.setText(
 						consoleArea.getText() + "Sorry, cannot open the script file [" + inputFile.getPath() + "] !\n");
-				//e.printStackTrace();
+				e.printStackTrace();
 			}
 
 		}
@@ -115,7 +121,7 @@ public class Controller {
 				writer.close();
 			}
 			catch (IOException e) {
-				//e.printStackTrace();
+				e.printStackTrace();
 				consoleArea.setText(consoleArea.getText() + "Sorry, could not save the script at ["
 						+ outputFile.getPath() + "] !\n");
 			}
