@@ -66,8 +66,7 @@ public class Controller {
 		}
 		catch (ParsingScriptException e) {
 			e.printStackTrace();
-			consoleArea.setText(consoleArea.getText() + "The line [" + e.getLineNumberFaulty()
-					+ "] is not understood by the parser.\n");
+			consoleArea.setText(consoleArea.getText() + e.getMessage() + '\n');
 		}
 	}
 
@@ -88,7 +87,7 @@ public class Controller {
 		if (inputFile != null) {
 			StringBuffer txt = new StringBuffer("");
 			try {
-				Files.lines(Paths.get(inputFile.getAbsolutePath())).forEach(s -> txt.append(s));
+				Files.lines(inputFile.toPath()).forEach(s -> txt.append(s + '\n'));
 				scriptArea.setText(txt.toString());
 				consoleArea.setText("");
 			}
@@ -138,6 +137,7 @@ public class Controller {
 			String optionList = lineMatcher.group(2);
 
 			filterQueue.add(filterFactory.create(firstWord, optionList, lineNumber));
+			lineNumber++;
 		}
 
 	}
