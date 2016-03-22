@@ -26,6 +26,8 @@ import application.ParsingScriptException;
  *         SNAPSHOT
  *         SAVE [an absolute path to a *.jpg | *.png | *.jp2 | *.bmp]
  *         SUBSTRACT [an absolute path to a *.jpg | *.png | *.jp2 | *.bmp]
+ *         ERODE [--iteration|-i] [POSITIVE INT]
+ *         DILATE [--iteration|-i] [POSITIVE INT]
  *
  *
  */
@@ -102,6 +104,17 @@ public class FilterFactory {
 			if (pathToSubstract != null)
 				return new Substract(pathToSubstract);
 			else throw new ParsingScriptException("SUBSTRACT expects an absolute path pointing to picture file");
+		case "ERODE" :
+			int argIteration = parseOptionForErosion(optionList);
+			if (argIteration == -1)
+				throw new ParsingScriptException("ERODE expects --iteration|-i [POSITIVE INT]");
+			else return new Erosion(argIteration);
+		case "DILATE" :
+			int argIte = parseOptionForErosion(optionList);
+			if (argIte == -1)
+				throw new ParsingScriptException("DILATE expects --iteration|-i [POSITIVE INT]");
+			else return new Dilatation(argIte);
+			
 		}
 		throw new ParsingScriptException("The parser expects one valid instruction per line");
 	}
@@ -140,6 +153,16 @@ public class FilterFactory {
 
 	private int parseOptionForGaussianBlur(String optList) {
 		Pattern pat = Pattern.compile("\\s*((?:(?:-s)|(?:--size))\\s+(\\d+))\\s*");
+		Matcher mat = pat.matcher(optList);
+
+		if (mat.find()) {
+			return Integer.parseInt(mat.group(2));
+		}
+		return -1;
+	}
+	
+	private int parseOptionForErosion(String optList) {
+		Pattern pat = Pattern.compile("\\s*((?:(?:-i)|(?:--iteration))\\s+(\\d+))\\s*");
 		Matcher mat = pat.matcher(optList);
 
 		if (mat.find()) {

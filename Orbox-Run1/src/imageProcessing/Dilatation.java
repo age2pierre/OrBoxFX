@@ -5,12 +5,12 @@ import org.opencv.core.Point;
 import org.opencv.imgproc.Imgproc;
 
 
-public class Erosion implements ImageFilter, Timeable {
+public class Dilatation implements ImageFilter, Timeable {
 
 	private long counter = 0;
 	private int iteration;
 
-	public Erosion(int argIteration) {
+	public Dilatation(int argIteration) {
 		this.iteration = argIteration;
 	}
 
@@ -22,7 +22,7 @@ public class Erosion implements ImageFilter, Timeable {
 	@Override
 	public Mat process(Mat inputIm) throws FilterExecutionException {
 		counter = System.currentTimeMillis();
-		Imgproc.erode(inputIm, inputIm, new Mat(), new Point(-1, -1), iteration);
+		Imgproc.dilate(inputIm, inputIm, new Mat(), new Point(-1, -1), iteration);
 		counter -= System.currentTimeMillis();
 		return inputIm;
 	}
