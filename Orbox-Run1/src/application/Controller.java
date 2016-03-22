@@ -127,16 +127,19 @@ public class Controller {
 		}
 	}
 
-	private void parseScript() throws ParsingScriptException {
-		Pattern linePattern = Pattern.compile("(?m-)^\\s*(\\w+)(.*)$");
+	private void parseScript() throws ParsingScriptException  {
+		Pattern linePattern = Pattern.compile("(?m-)^(.*)$");
 		Matcher lineMatcher = linePattern.matcher(scriptArea.getText());
 		int lineNumber = 0;
 
 		while (lineMatcher.find()) {
-			String firstWord = lineMatcher.group(1);
-			String optionList = lineMatcher.group(2);
-
-			filterQueue.add(filterFactory.create(firstWord, optionList, lineNumber));
+			String line = lineMatcher.group(1);
+			try {
+				filterQueue.add(filterFactory.create(line));
+			}
+			catch (ParsingScriptException e) {
+				throw new ParsingScriptException(e.getMessage(), lineNumber);
+			}
 			lineNumber++;
 		}
 
