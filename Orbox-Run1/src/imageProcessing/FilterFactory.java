@@ -82,6 +82,10 @@ public class FilterFactory {
 			if (optionList.matches("[\\w]*"))
 				return new ColorMap();
 			else throw new ParsingScriptException("COLORMAP filter doesn't accept option");
+		case "HOUGH" : 
+			if (optionList.matches("[\\w]*"))
+				return new HoughCircles();
+			else throw new ParsingScriptException("HOUGH filter doesn't accept option");
 		case "CALIBRATION":
 			String path = parseOptionForPicFileReader(optionList);
 			if (path != null) {

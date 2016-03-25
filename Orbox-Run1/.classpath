@@ -7,5 +7,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/ApacheCommonsCodec"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/GSON_2.3"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LIRE1.0b2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/GSON"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Lire"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/opencv3.0"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
