@@ -14,7 +14,7 @@ public class HoughCircles implements ImageFilter, Timeable {
 		counter = System.currentTimeMillis();
 		
 		Mat circles  = new Mat();
-		Imgproc.HoughCircles(inputIm, circles, Imgproc.CV_HOUGH_GRADIENT, 1, 100, 200, 100, 100, 0);
+		Imgproc.HoughCircles(inputIm, circles, Imgproc.CV_HOUGH_GRADIENT, 1, 200, 200, 100, 100, 800);
 		
 		for (int x = 0; x < circles.cols(); x++) 
         {
@@ -23,9 +23,9 @@ public class HoughCircles implements ImageFilter, Timeable {
                 Point center =new Point(Math.round(vCircle[0]), Math.round(vCircle[1]));
                 int radius = (int)Math.round(vCircle[2]);
                 // draw the circle center
-                Imgproc.circle(inputIm, center, 3,new Scalar(255,0,220), -1, 8, 0 );
+                Imgproc.circle(inputIm, center, 3,new Scalar(0,0,0), -1, 8, 0 );
                 // draw the circle outline
-                Imgproc.circle( inputIm, center, radius, new Scalar(255,0,220), 3, 8, 0 );
+                Imgproc.circle( inputIm, center, radius, new Scalar(0,0, 0), 3, 8, 0 );
 
         }
 		counter = System.currentTimeMillis() - counter;

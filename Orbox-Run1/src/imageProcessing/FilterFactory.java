@@ -86,6 +86,14 @@ public class FilterFactory {
 			if (optionList.matches("[\\w]*"))
 				return new HoughCircles();
 			else throw new ParsingScriptException("HOUGH filter doesn't accept option");
+		case "ORB" : 
+			if (optionList.matches("[\\w]*"))
+				return new Orb();
+			else throw new ParsingScriptException("ORB filter doesn't accept option");
+		case "COLORHIST" : 
+			if (optionList.matches("[\\w]*"))
+				return new ColorHistogram();
+			else throw new ParsingScriptException("COLORHIST filter doesn't accept option");
 		case "CALIBRATION":
 			String path = parseOptionForPicFileReader(optionList);
 			if (path != null) {
