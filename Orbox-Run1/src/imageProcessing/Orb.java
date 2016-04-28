@@ -36,7 +36,7 @@ public class Orb implements ImageFilter, Timeable {
 		featureDetector.detect(inputIm, matKeyPoints1);
 		descriptorExtractor.compute(inputIm, matKeyPoints1, descriptors1);
 		
-		Mat img2 = Imgcodecs.imread("C:\\Users\\Antoine\\Desktop\\image\\full.jpg", Imgcodecs.IMREAD_GRAYSCALE);
+		Mat img2 = Imgcodecs.imread("C:\\Users\\Antoine\\Desktop\\image\\pc_1_img.jpg", Imgcodecs.IMREAD_GRAYSCALE);
 		Mat descriptors2 = new Mat();
 		MatOfKeyPoint matKeyPoints2 = new MatOfKeyPoint();
 		
@@ -47,9 +47,9 @@ public class Orb implements ImageFilter, Timeable {
 		MatOfDMatch  matches = new MatOfDMatch();             
 		descriptorMatcher.match(descriptors1,descriptors2,matches);
 		
-		MatOfDMatch  matches2 = new MatOfDMatch();      
+		//MatOfDMatch  matches2 = new MatOfDMatch();      
 		
-		int DIST_LIMIT = 50;
+		int DIST_LIMIT = 80;
 		List<DMatch> matchesList = matches.toList();
 		List<DMatch> matches_final= new ArrayList<DMatch>();
 		for(int i=0; i<matchesList.size(); i++){
